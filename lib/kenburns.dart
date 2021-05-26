@@ -63,8 +63,9 @@ class KenBurns extends StatefulWidget {
       this.childLoop = 3,
       this.children,
       this.childrenFadeDuration = const Duration(milliseconds: 800),
-      this.randomize = false})
-      : this.child = null;
+      bool? randomize})
+      : this.child = null,
+        this.randomize = randomize ?? false;
 
   @override
   _KenBurnsState createState() => _KenBurnsState();
