@@ -21,7 +21,7 @@ class KenBurns extends StatefulWidget {
   /// Will animate [childLoop] each children then will fade to the next child
   /// Not Null & Size must be > 1
   /// if size == 1 -> Will use the KenBurns as a single child
-  final List<Widget>? children;
+  late final List<Widget>? children;
 
   /// If specified (using the constructor multiple)
   /// Will specify the fade in duration between 2 child
@@ -54,9 +54,15 @@ class KenBurns extends StatefulWidget {
       this.maxAnimationDuration = const Duration(milliseconds: 10000),
       this.maxScale = 10,
       this.childLoop = 3,
-      this.children,
-      this.childrenFadeDuration = const Duration(milliseconds: 800)})
-      : this.child = null;
+      this.childrenFadeDuration = const Duration(milliseconds: 800),
+      List<Widget>? children,
+      bool? shuffle})
+      : this.child = null {
+    if ((shuffle ?? false) && children != null) {
+      children..shuffle();
+    }
+    this.children = children;
+  }
 
   @override
   _KenBurnsState createState() => _KenBurnsState();
