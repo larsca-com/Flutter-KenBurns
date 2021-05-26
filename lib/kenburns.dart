@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'KenburnsGenerator.dart';
@@ -5,6 +6,7 @@ import 'KenburnsGenerator.dart';
 /// KenBurns widget, please provide a `child` Widget,
 /// Will animate the child, using random scale, translation & duration
 class KenBurns extends StatefulWidget {
+  final Random _random = Random();
   final Widget? child;
 
   /// minimum translation & scale duration, not null
@@ -32,6 +34,10 @@ class KenBurns extends StatefulWidget {
   /// Until the next child will be displayed
   final int? childLoop;
 
+  /// If specified (using the constructor multiple)
+  /// Will determine if the next child is selected randomly
+  final bool randomize;
+
   //endregion
 
   /// Constructor for a single child KenBurns
@@ -43,6 +49,7 @@ class KenBurns extends StatefulWidget {
   })  : this.childrenFadeDuration = null,
         this.children = null,
         this.childLoop = null,
+        this.randomize = false,
         assert(minAnimationDuration.inMilliseconds > 0),
         assert(maxAnimationDuration.inMilliseconds > 0),
         assert(minAnimationDuration < maxAnimationDuration),
@@ -55,7 +62,8 @@ class KenBurns extends StatefulWidget {
       this.maxScale = 10,
       this.childLoop = 3,
       this.children,
-      this.childrenFadeDuration = const Duration(milliseconds: 800)})
+      this.childrenFadeDuration = const Duration(milliseconds: 800),
+      this.randomize = false})
       : this.child = null;
 
   @override
@@ -237,8 +245,14 @@ class _KenBurnsState extends State<KenBurns> with TickerProviderStateMixin {
 
     setState(() {
       _currentChildIndex = _nextChildIndex;
-
-      _nextChildIndex = _currentChildIndex + 1;
+      if (widget.randomize) {
+        // Don't choose same child twice
+        _nextChildIndex = _currentChildIndex +
+            widget._random.nextInt(widget.children!.length - 1) +
+            1;
+      } else {
+        _nextChildIndex = _currentChildIndex + 1;
+      }
       _nextChildIndex = _nextChildIndex % widget.children!.length;
     });
 
