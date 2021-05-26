@@ -246,24 +246,28 @@ class _KenBurnsState extends State<KenBurns> with TickerProviderStateMixin {
 
     setState(() {
       _currentChildIndex = _nextChildIndex;
-      if (widget.randomize) {
-        // Don't choose same child twice
-        _nextChildIndex = _currentChildIndex +
-            widget._random.nextInt(widget.children!.length - 1) +
-            1;
-      } else {
-        _nextChildIndex = _currentChildIndex + 1;
-      }
-      _nextChildIndex = _nextChildIndex % widget.children!.length;
+      _nextChildIndex = _getNextChildIndex();
     });
 
     _fadeController!.reset();
   }
 
+  int _getNextChildIndex() {
+    int nextChildIndex;
+    if (widget.randomize) {
+      nextChildIndex = _currentChildIndex +
+          widget._random.nextInt(widget.children!.length - 1) +
+          1;
+    } else {
+      nextChildIndex = _currentChildIndex + 1;
+    }
+    return nextChildIndex % widget.children!.length;
+  }
+
   Future<void> fire({double? height, double? width}) async {
     _running = true;
     if (_displayMultipleImage) {
-      _nextChildIndex = 1;
+      _nextChildIndex = _getNextChildIndex();
 
       /// Create one time the fade animation
       await _createFadeAnimations();
@@ -290,6 +294,9 @@ class _KenBurnsState extends State<KenBurns> with TickerProviderStateMixin {
   void initState() {
     /// Reset _runnint state
     _running = false;
+    if (_displayMultipleImage) {
+      _currentChildIndex = widget._random.nextInt(widget.children!.length - 1);
+    }
     super.initState();
   }
 
