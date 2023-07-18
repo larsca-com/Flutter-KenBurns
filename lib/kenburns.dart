@@ -204,19 +204,19 @@ class _KenBurnsState extends State<KenBurns> with TickerProviderStateMixin {
         .animate(
       CurvedAnimation(parent: _translationController!, curve: Curves.linear),
     )..addListener(() {
-            setState(() {
-              _currentTranslationX = _translationXAnim.value;
-            });
-          });
+        setState(() {
+          _currentTranslationX = _translationXAnim.value;
+        });
+      });
     _translationYAnim = Tween(
             begin: this._currentTranslationY, end: nextConfig.newTranslation.dy)
         .animate(
       CurvedAnimation(parent: _translationController!, curve: Curves.linear),
     )..addListener(() {
-            setState(() {
-              _currentTranslationY = _translationYAnim.value;
-            });
-          });
+        setState(() {
+          _currentTranslationY = _translationYAnim.value;
+        });
+      });
 
     log("kenburns started");
     log("kenburns d(${nextConfig.newDuration}) translation(${nextConfig.newTranslation.dx}, ${nextConfig.newTranslation.dy}) scale(${nextConfig.newScale})");

@@ -34,7 +34,8 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
               ),
-              */Container(
+              */
+              Container(
                 height: 300,
                 child: KenBurns.multiple(
                   maxAnimationDuration: Duration(seconds: 10),
@@ -45,7 +46,7 @@ class _MyAppState extends State<MyApp> {
                       fit: BoxFit.cover,
                     ),
                     Image.network(
-                      "https://cdn.getyourguide.com/img/location_img-59-1969619245-148.jpg",
+                      "https://images.contentstack.io/v3/assets/blt06f605a34f1194ff/blt958fc619afa5a589/6486edb72429af6314f47521/McLaren-BCS-4383-HP-3-2.39x1-V1.jpg?auto=webp",
                       fit: BoxFit.cover,
                     ),
                     Image.network(
